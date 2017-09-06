@@ -15,19 +15,19 @@ namespace BimIndexerTests
 
 			indexer.IndexIfc("Resources/02_BIMcollab_Example_STR.ifc");
 
-			var searchResponse = connection.client.Search<string>("bim_projects", "project", new
-				{
-					query = new
-					{
-						query_string = new
-						{
-							query = "Revit"
-						}
-					}
-				});
-
-			var successful = searchResponse.Success;
-			var responseJson = searchResponse.Body;
+//			var searchResponse = connection.client.Search<string>("bim_projects", "project", new
+//				{
+//					query = new
+//					{
+//						query_string = new
+//						{
+//							query = "Revit"
+//						}
+//					}
+//				});
+//
+//			var successful = searchResponse.Success;
+//			var responseJson = searchResponse.Body;
 
 		}
 	}
