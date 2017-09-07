@@ -1,5 +1,7 @@
 ﻿using System;
 using Xbim.Ifc2x3.Kernel;
+using System.Text;
+using Xbim.Ifc2x3.PropertyResource;
 
 namespace BimIndexer
 {
@@ -26,16 +28,22 @@ namespace BimIndexer
 			this.Name = product.FriendlyName;
 			this.IfcType = product.GetType().Name;
 			this.PropertySummary = this.CreatePropertySummary(product);
+			Console.Write(this.PropertySummary);
 		}
 
 		private string CreatePropertySummary(IfcProduct product) 
 		{
-			var summary = "";
+			var summary = new StringBuilder();
 			foreach(var pSet in product.PropertySets) 
 			{
-				Console.WriteLine(pSet.ToString());
+				foreach(var property in pSet.HasProperties)
+				{
+					IfcPropertySingleValue singleVal = property as IfcPropertySingleValue;
+					if (singleVal == null) continue;
+					summary.AppendLine(singleVal.Name.Value + ": " + singleVal.NominalValue.Value + " " + singleVal.Unit);
+				}
 			}
-			return summary;
+			return summary.ToString();
 		}
 	}
 }

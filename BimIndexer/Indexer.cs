@@ -32,7 +32,7 @@ namespace BimIndexer
 				Console.WriteLine("Indexing Products for model {0}", document.LongName);
 				this.IndexProducts(model, (string)document.DocumentId, "1");
 
-				var indexResponse = this.connection.client.Index<byte[]>("bim_projects", "project", "2", document);
+				var indexResponse = this.connection.client.Index<byte[]>("bim_projects", "project", "1", document);
 				byte[] responseBytes = indexResponse.Body;
 			}
 		}
@@ -42,7 +42,7 @@ namespace BimIndexer
 			foreach(var instance in model.Instances.OfType<IfcProduct>()) 
 			{
 				var summary = new ProductSummary(instance, documentId);
-				var indexResponse = this.connection.client.Index<byte[]>("bim_projects", "products", version, summary);
+				var indexResponse = this.connection.client.Index<byte[]>("bim_projects", "products", (string)instance.GlobalId.Value, summary);
 				byte[] responseBytes = indexResponse.Body;
 			}
 		}	
